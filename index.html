@@ -1,0 +1,1867 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Parachute Events — Wedding Planning by Amrit Banga</title>
+<meta name="description" content="Parachute Events is the wedding planning studio of Amrit Banga — joyful, seamless, stress-free weddings designed end to end." />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236d2f42' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 11a9 9 0 0 1 18 0z'/%3E%3Cpath d='M12 11v5'/%3E%3Cpath d='M6.5 11 8 16M12 11v5M17.5 11 16 16'/%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500&display=swap" rel="stylesheet" />
+<script type="importmap">
+{ "imports": { "lenis": "./vendor/lenis.mjs" } }
+</script>
+<style>
+/* ============================================================
+   RESET
+   ============================================================ */
+*, *::before, *::after { box-sizing: border-box; }
+* { margin: 0; padding: 0; }
+
+html {
+  font-size: 16px;
+  color-scheme: light;
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: auto;
+}
+@media (max-width: 1920px) { html { font-size: 0.833333vw; } }
+@media (max-width: 1440px) { html { font-size: 1.111111vw; } }
+@media (max-width: 1024px) { html { font-size: 1.5625vw; } }
+@media (max-width: 640px)  { html { font-size: 4.444444vw; } }
+
+body {
+  min-height: 100vh;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: "Onest", system-ui, sans-serif;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+img { display: block; max-width: 100%; }
+button { cursor: pointer; background: none; border: none; font: inherit; color: inherit; }
+a { color: inherit; text-decoration: none; }
+ul, ol { list-style: none; }
+address { font-style: normal; }
+[hidden] { display: none !important; }
+h1, h2, h3, p, figure, blockquote, dl, dd { margin: 0; }
+
+:focus-visible { outline: 2px solid var(--brand-deep); outline-offset: 2px; }
+
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+
+main { width: 100%; overflow-x: clip; padding: 0.5rem; }
+@media (min-width: 640px) { main { padding: 0.75rem; } }
+
+/* ============================================================
+   TOKENS
+   ============================================================ */
+:root {
+  --background: #fffaf7;
+  --foreground: #2d2320;
+  --brand: #c9748a;
+  --brand-deep: #6d2f42;
+  --brand-deep-rgb: 109, 47, 66;
+  --brand-light: #e8a5b0;
+  --accent-gold: #9c7a38;
+  --surface: #f7ece9;
+  --surface-card: #ffffff;
+  --ink: #2d2320;
+  --ink-soft: #6f5a54;
+  --ghost: #efdcd9;
+  --hairline: #ecdfdb;
+  --on-brand: #ffffff;
+
+  --radius-card: 1.5rem;
+  --radius-card-lg: 2rem;
+  --radius-pill: 62.5rem;
+  --radius-xl: 0.75rem;
+
+  --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-soft: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ============================================================
+   SHARED COMPONENTS
+   ============================================================ */
+.eyebrow {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  font-size: 0.75rem; font-weight: 500; text-transform: uppercase;
+  letter-spacing: 0.22em; line-height: 1;
+}
+.eyebrow-dot { width: 0.375rem; height: 0.375rem; border-radius: var(--radius-pill); flex: none; }
+.eyebrow-dark { color: var(--ink-soft); }
+.eyebrow-dark .eyebrow-dot { background: var(--brand); }
+.eyebrow-light { color: rgba(255, 255, 255, 0.7); }
+.eyebrow-light .eyebrow-dot { background: var(--brand-light); }
+
+.pill {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  border-radius: var(--radius-pill);
+  padding: 0.875rem 1.75rem;
+  font-size: 0.875rem; font-weight: 500; text-transform: uppercase;
+  letter-spacing: 0.06em; line-height: 1; white-space: nowrap;
+  transition: background-color 0.35s var(--ease-soft), color 0.35s var(--ease-soft);
+}
+.pill svg { width: 1rem; height: 1rem; flex: none; }
+.pill-light { background: #ffffff; color: var(--brand-deep); }
+.pill-light:hover { background: var(--brand-light); color: #ffffff; }
+.pill-solid { background: var(--ink); color: #ffffff; }
+.pill-solid:hover { background: var(--brand-deep); }
+.pill-outline { border: 1px solid currentColor; color: var(--ink); }
+.pill-outline:hover { background: var(--ink); color: #ffffff; }
+
+.arrow-btn {
+  width: 3rem; height: 3rem; display: grid; place-items: center;
+  border-radius: var(--radius-pill); flex: none;
+  transition: background-color 0.35s var(--ease-soft), border-color 0.35s var(--ease-soft);
+}
+@media (min-width: 640px) { .arrow-btn { width: 3.5rem; height: 3.5rem; } }
+.arrow-btn svg { width: 1.25rem; height: 1.25rem; }
+.arrow-outline { border: 1px solid var(--hairline); background: transparent; color: var(--ink); }
+.arrow-outline:hover { border-color: var(--ink); }
+.arrow-solid { background: var(--ink); border: 1px solid var(--ink); color: #ffffff; }
+.arrow-solid:hover { background: var(--brand-deep); border-color: var(--brand-deep); }
+.arrow-flip { transform: scaleX(-1); }
+
+.dots { display: flex; align-items: center; gap: 0.5rem; }
+.dot-btn { padding: 0.375rem; display: block; line-height: 0; }
+.dot {
+  display: block; height: 0.375rem; width: 0.375rem;
+  border-radius: var(--radius-pill);
+  background: var(--ghost);
+  transition: width 0.4s var(--ease-expo), background-color 0.4s var(--ease-soft);
+}
+.dot-btn[aria-current="true"] .dot { width: 1.25rem; background: var(--ink); }
+.dots-light .dot { background: rgba(255, 255, 255, 0.4); }
+.dots-light .dot-btn[aria-current="true"] .dot { background: #ffffff; }
+
+/* text engine primitives */
+.sl-line { display: block; overflow: hidden; padding-bottom: 0.14em; margin-bottom: -0.14em; }
+.sl-in { display: block; transform: translateY(115%); will-change: transform; }
+.tw {
+  display: inline-block; overflow: hidden; vertical-align: top;
+  padding-bottom: 0.12em; margin-bottom: -0.12em;
+}
+.tw-in { display: inline-block; transform: translateY(115%); opacity: 0; will-change: transform, opacity; }
+.fw { display: inline-block; overflow: hidden; vertical-align: top; }
+.fw-in { display: inline-block; opacity: 0; will-change: transform, opacity; }
+
+/* ============================================================
+   LOADER
+   ============================================================ */
+.loader {
+  position: fixed; inset: 0; z-index: 200;
+  background: var(--brand-deep); color: #ffffff;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 2rem; will-change: transform;
+}
+.loader-word {
+  display: flex; align-items: center; gap: 0.75rem;
+  font-size: 1.5rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.2em;
+  line-height: 1; padding: 0 1rem;
+}
+.loader-word svg { width: 1.75rem; height: 1.75rem; flex: none; }
+.loader-track {
+  width: 10rem; height: 1px; border-radius: var(--radius-pill);
+  background: rgba(255, 255, 255, 0.2); overflow: hidden;
+}
+.loader-fill {
+  width: 100%; height: 100%; background: #ffffff;
+  transform: scaleX(0); transform-origin: left center;
+}
+
+/* ============================================================
+   HERO
+   ============================================================ */
+.hero {
+  position: relative; isolation: isolate; overflow: hidden;
+  container-type: inline-size;
+  background: var(--brand-deep); color: #ffffff;
+  border-radius: var(--radius-card-lg);
+  height: calc(100svh - 1rem); min-height: 36rem;
+  display: flex; flex-direction: column;
+}
+@media (min-width: 640px) { .hero { height: calc(100svh - 1.5rem); } }
+
+.hero-plate {
+  position: absolute; inset: 0; z-index: -10;
+  left: 0; right: 0; top: -16%; height: 132%; width: 100%;
+  will-change: transform;
+}
+.hero-plate img { width: 100%; height: 100%; object-fit: cover; }
+.hero-plate::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(to bottom, rgba(var(--brand-deep-rgb), 0.62), rgba(var(--brand-deep-rgb), 0.3), rgba(var(--brand-deep-rgb), 0.78));
+}
+
+.site-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1.5rem 1.5rem 0; font-size: 0.75rem; color: #ffffff;
+  position: relative; z-index: 20;
+}
+@media (min-width: 640px) { .site-header { padding: 2rem 2.5rem 0; } }
+.header-nav { display: none; flex: 1; gap: 2rem; }
+@media (min-width: 1024px) { .header-nav { display: flex; } }
+.header-nav a { color: rgba(255, 255, 255, 0.9); transition: color 0.3s var(--ease-soft); }
+.header-nav a:hover { color: #ffffff; }
+
+.header-brand {
+  flex: 1; display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+  font-size: 1rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.2em;
+  color: #ffffff; line-height: 1;
+}
+.header-brand svg { width: 1.25rem; height: 1.25rem; flex: none; }
+
+.header-right { flex: 1; display: flex; align-items: center; justify-content: flex-end; gap: 1rem; }
+@media (min-width: 640px) { .header-right { gap: 1.25rem; } }
+.header-book { display: none; text-transform: uppercase; letter-spacing: 0.06em; color: #ffffff; }
+@media (min-width: 640px) { .header-book { display: block; } }
+.header-book::after {
+  content: ""; display: block; height: 1px; width: 100%;
+  background: currentColor; transform: scaleX(0); transform-origin: left center;
+  transition: transform 0.4s var(--ease-expo);
+}
+.header-book:hover::after { transform: scaleX(1); }
+
+.burger {
+  width: 2.5rem; height: 2.5rem; display: grid; place-content: center; gap: 5px;
+  border-radius: var(--radius-pill);
+  background: rgba(255, 255, 255, 0.15); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+  transition: background-color 0.35s var(--ease-soft);
+}
+.burger:hover { background: rgba(255, 255, 255, 0.25); }
+.burger span { display: block; width: 1rem; height: 1px; background: #ffffff; }
+
+.hero-title-block { padding: 1rem 1.5rem 0; position: relative; z-index: 10; }
+@media (min-width: 640px) { .hero-title-block { padding: 1rem 2.5rem 0; } }
+/* 12.5vw is the design size and wins at 1920+. Below that the rem-based
+   title-block inset grows faster than the vw headline, so cap the size with
+   the width actually available. --hero-em is the measured advance width of the
+   headline in em (set by fitHeroTitle at runtime), so the cap stays correct for
+   any headline length and the full-bleed line is never clipped. */
+.hero-title {
+  --hero-em: 7.4554;
+  font-size: min(12.5vw, calc((100cqi - 3rem) / var(--hero-em)));
+  font-weight: 500; text-transform: uppercase;
+  line-height: 0.85; letter-spacing: -0.05em; word-spacing: -0.16em;
+  white-space: nowrap;
+  color: #ffffff;
+}
+@media (min-width: 640px) {
+  .hero-title { font-size: min(12.5vw, calc((100cqi - 5rem) / var(--hero-em))); }
+}
+
+.hero-bottom {
+  margin-top: auto; position: relative; z-index: 10;
+  padding: 0 1.5rem 2rem;
+  display: flex; flex-direction: column; gap: 1.5rem;
+}
+@media (min-width: 640px) {
+  .hero-bottom { flex-direction: row; align-items: flex-end; justify-content: space-between; padding: 0 2.5rem 2.5rem; }
+}
+.hero-tagline {
+  font-size: 2.4rem; font-weight: 500; text-transform: uppercase;
+  line-height: 0.95; letter-spacing: -0.02em; color: rgba(255, 255, 255, 0.85);
+}
+.hero-cluster { display: flex; align-items: flex-end; gap: 1rem; }
+
+.collection { display: none; width: 16rem; flex-direction: column; gap: 0.75rem; }
+@media (min-width: 768px) { .collection { display: flex; } }
+.collection-stage { position: relative; min-height: 5rem; }
+.collection-card {
+  position: absolute; inset: 0;
+  display: flex; gap: 0.75rem;
+  border-radius: var(--radius-card);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.1);
+  -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+  box-shadow: 0 0.75rem 1.5rem rgba(var(--brand-deep-rgb), 0.2);
+  padding: 0.75rem;
+  will-change: transform, opacity;
+}
+.collection-card img {
+  width: 3.5rem; height: 3.5rem; flex: none;
+  border-radius: var(--radius-xl); object-fit: cover;
+}
+.collection-meta { display: flex; flex-direction: column; justify-content: center; gap: 0.2rem; min-width: 0; }
+.collection-brand {
+  font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.06em; line-height: 1.1; color: #ffffff;
+}
+.collection-title { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.04em; line-height: 1.1; color: rgba(255,255,255,0.8); }
+.collection-cta { font-size: 0.65rem; text-decoration: underline; text-underline-offset: 0.2em; color: #ffffff; }
+
+.membership {
+  width: 100%; max-width: 20rem;
+  display: flex; gap: 0.75rem; align-items: stretch;
+  border-radius: var(--radius-card);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.1);
+  -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+  box-shadow: 0 0.75rem 1.5rem rgba(var(--brand-deep-rgb), 0.2);
+  padding: 0.75rem;
+}
+@media (min-width: 640px) { .membership { max-width: 15rem; } }
+.membership-left { display: flex; flex-direction: column; justify-content: space-between; flex: 1; min-width: 0; }
+.membership-value { font-size: 1.875rem; font-weight: 500; line-height: 1; color: #ffffff; }
+.membership-avatars { display: flex; }
+.membership-avatars span {
+  width: 1.25rem; height: 1.25rem; border-radius: var(--radius-pill);
+  border: 1px solid rgba(var(--brand-deep-rgb), 0.4);
+  margin-left: -0.5rem;
+}
+.membership-avatars span:first-child { margin-left: 0; }
+.membership-caption { font-size: 0.65rem; color: rgba(255, 255, 255, 0.8); line-height: 1.2; }
+.membership-card img {
+  width: 4rem; aspect-ratio: 3 / 4; flex: none;
+  border-radius: var(--radius-xl); object-fit: cover;
+}
+
+/* ============================================================
+   PHILOSOPHY
+   ============================================================ */
+.philosophy {
+  position: relative; isolation: isolate; overflow: hidden;
+  background: var(--background);
+  padding: 4rem 1.5rem;
+}
+@media (min-width: 640px) { .philosophy { padding: 5rem 2.5rem; } }
+.philosophy-top {
+  position: relative; z-index: 20;
+  display: flex; flex-direction: column; gap: 1.5rem;
+}
+@media (min-width: 640px) { .philosophy-top { flex-direction: row; align-items: center; justify-content: space-between; gap: 1.25rem; } }
+
+.percent-badge {
+  width: 7rem; height: 7rem; flex: none;
+  border-radius: var(--radius-pill); background: var(--surface);
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.25rem;
+  text-align: center; padding: 0.5rem;
+}
+@media (min-width: 640px) { .percent-badge { width: 8rem; height: 8rem; } }
+.percent-badge strong { font-size: 1.5rem; font-weight: 500; line-height: 1; color: var(--brand-deep); }
+.percent-badge span { font-size: 0.6rem; color: var(--ink-soft); line-height: 1.2; max-width: 7em; }
+
+.philosophy-badge-card {
+  max-width: 28rem;
+  display: flex; gap: 1rem; align-items: flex-start;
+  border-radius: var(--radius-card); background: var(--surface); padding: 1.25rem;
+}
+@media (min-width: 640px) { .philosophy-badge-card { gap: 1.25rem; padding: 1.5rem; } }
+.philosophy-index {
+  border-radius: var(--radius-xl); background: var(--background);
+  padding: 0.5rem 1rem; font-size: 1.5rem; font-weight: 500; line-height: 1; color: var(--ink);
+  flex: none;
+}
+.philosophy-badge-card h3 { font-size: 1.125rem; font-weight: 500; color: var(--ink); line-height: 1.2; }
+.philosophy-badge-card p { font-size: 0.75rem; color: var(--ink-soft); line-height: 1.5; margin-top: 0.5rem; }
+
+.ghost-heading {
+  position: relative; z-index: 0; pointer-events: none; user-select: none;
+  max-width: 88rem; margin: 3rem auto 0; text-align: center;
+  font-size: 8.2vw; font-weight: 500; text-transform: uppercase;
+  line-height: 1.02; letter-spacing: -0.02em; color: var(--ghost);
+}
+.ghost-row { display: flex; justify-content: space-between; align-items: baseline; }
+.ghost-row .tw { will-change: transform; }
+.ghost-row .tw-in { padding-bottom: 0.12em; }
+.ghost-word-ink { color: var(--ink); }
+
+.founder-wrap { position: relative; z-index: 10; display: flex; justify-content: center; margin-top: 2.5rem; }
+@media (min-width: 640px) {
+  .founder-wrap { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); margin-top: 0; }
+}
+.founder-card {
+  width: 13rem; aspect-ratio: 3 / 4;
+  border-radius: var(--radius-card); background: var(--brand);
+  overflow: hidden; position: relative; transform: rotate(-6deg);
+  will-change: transform, opacity;
+}
+@media (min-width: 640px) { .founder-card { width: 16rem; } }
+.founder-photo { position: absolute; inset: 0; }
+.founder-photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.founder-caption {
+  position: absolute; left: 0.75rem; right: 0.75rem; bottom: 0.75rem;
+  border-radius: var(--radius-xl);
+  background: rgba(var(--brand-deep-rgb), 0.4);
+  -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+  padding: 0.5rem 0.75rem; color: #ffffff;
+}
+.founder-caption strong { display: block; font-size: 0.875rem; font-weight: 500; line-height: 1.2; }
+.founder-caption span { display: block; font-size: 0.65rem; opacity: 0.8; line-height: 1.3; margin-top: 0.15rem; }
+
+.philosophy-note {
+  position: relative; z-index: 20;
+  margin-top: 3rem; text-align: center;
+  font-size: 0.9375rem; line-height: 1.6; color: var(--ink-soft);
+  max-width: 34rem; margin-left: auto; margin-right: auto;
+  text-wrap: balance;
+}
+@media (min-width: 640px) { .philosophy-note { margin-top: 6rem; } }
+
+/* ============================================================
+   SERVICES
+   ============================================================ */
+.services { background: var(--surface); padding: 6rem 1.5rem; }
+@media (min-width: 640px) { .services { padding: 6rem 2.5rem; } }
+.h2 { font-size: 3rem; font-weight: 500; line-height: 0.95; letter-spacing: -0.02em; color: var(--ink); }
+.h2-margin { margin-top: 1rem; }
+
+.services-list { margin-top: 3.5rem; }
+.srow {
+  display: flex; align-items: center; gap: 1.5rem;
+  padding: 1.75rem 0;
+  border-top: 1px solid var(--hairline);
+  transition: background-color 0.4s var(--ease-soft);
+}
+.srow:last-child { border-bottom: 1px solid var(--hairline); }
+.srow:hover { background: var(--background); }
+.srow-index { width: 2.5rem; flex: none; font-size: 0.875rem; font-weight: 500; color: var(--ink-soft); }
+.srow-body { flex: 1; min-width: 0; display: block; }
+.srow-name { display: block; font-size: 1.5rem; font-weight: 500; line-height: 1.05; letter-spacing: -0.02em; color: var(--ink); }
+@media (min-width: 640px) { .srow-name { font-size: 1.875rem; } }
+.srow-desc { display: block; font-size: 0.875rem; color: var(--ink-soft); margin-top: 0.5rem; }
+.srow-arrow {
+  width: 2.75rem; height: 2.75rem; flex: none;
+  border-radius: var(--radius-pill); border: 1px solid var(--hairline);
+  display: grid; place-items: center; color: var(--ink);
+  opacity: 0.55;
+  will-change: transform, opacity;
+}
+.srow-arrow svg { width: 1.25rem; height: 1.25rem; }
+
+/* ============================================================
+   EXPERIENCE
+   ============================================================ */
+.experience {
+  background: var(--background);
+  border-radius: var(--radius-card-lg);
+  margin-top: -2.5rem;
+  padding: 4rem 1.5rem 5rem;
+  position: relative; z-index: 5;
+}
+@media (min-width: 640px) { .experience { padding: 4rem 2.5rem 5rem; } }
+.experience-grid {
+  display: grid; grid-template-columns: 1fr; gap: 2.5rem; align-items: end;
+}
+@media (min-width: 768px) { .experience-grid { grid-template-columns: 1fr 1fr; } }
+.experience-intro { max-width: 24rem; }
+.experience-icon {
+  width: 4rem; height: 4rem; border-radius: var(--radius-card);
+  object-fit: cover; will-change: transform, opacity;
+}
+.experience-title { margin-top: 1.5rem; }
+.experience-body {
+  font-size: 0.875rem; color: var(--ink-soft);
+  max-width: 20rem; margin-top: 1.5rem; line-height: 1.5;
+}
+.experience-cards { display: flex; align-items: flex-end; gap: 1.25rem; }
+.ecard {
+  position: relative; flex: 1; aspect-ratio: 3 / 4;
+  border-radius: var(--radius-card); overflow: hidden;
+  background: var(--surface);
+  will-change: transform, opacity;
+}
+.ecard:nth-child(2) { margin-bottom: 2rem; }
+.ecard-media { position: absolute; inset: 0; transform-origin: center center; }
+.ecard-media img { width: 100%; height: 100%; object-fit: cover; }
+.ecard-caption {
+  position: absolute; left: 0.75rem; right: 0.75rem; bottom: 0.75rem;
+  border-radius: var(--radius-xl);
+  -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+  padding: 0.75rem 1rem; color: #ffffff;
+}
+.ecard-caption.tone-rose { background: rgba(var(--brand-deep-rgb), 0.55); }
+.ecard-caption.tone-gold { background: rgba(146, 108, 51, 0.55); }
+.ecard-caption strong { display: block; font-size: 0.875rem; font-weight: 500; line-height: 1.2; }
+.ecard-caption span { display: block; font-size: 0.65rem; opacity: 0.85; line-height: 1.3; margin-top: 0.2rem; }
+
+/* ============================================================
+   PROOF
+   ============================================================ */
+.proof {
+  background: var(--brand-deep); color: #ffffff;
+  border-radius: var(--radius-card-lg);
+  margin-top: 0.75rem;
+  padding: 5rem 1.5rem;
+}
+@media (min-width: 640px) { .proof { padding: 5rem 2.5rem; } }
+.proof .h2 { color: #ffffff; }
+.proof-grid {
+  display: grid; grid-template-columns: repeat(2, 1fr);
+  column-gap: 2rem; row-gap: 3rem; margin-top: 4rem;
+}
+@media (min-width: 1024px) { .proof-grid { grid-template-columns: repeat(4, 1fr); } }
+.stat { border-top: 1px solid rgba(255, 255, 255, 0.2); padding-top: 1.25rem; will-change: transform, opacity; }
+.stat dd { display: block; }
+.stat-value { display: block; font-size: 3.75rem; font-weight: 500; line-height: 1; letter-spacing: -0.02em; color: #ffffff; }
+@media (min-width: 640px) { .stat-value { font-size: 4.5rem; } }
+.stat-label { display: block; font-size: 0.875rem; color: rgba(255, 255, 255, 0.65); margin-top: 0.75rem; line-height: 1.4; }
+
+/* ============================================================
+   LOVE NOTES
+   ============================================================ */
+.love-notes { background: var(--background); padding: 5rem 1.5rem; }
+@media (min-width: 640px) { .love-notes { padding: 6rem 2.5rem; } }
+.love-notes-list {
+  display: grid; grid-template-columns: 1fr; gap: 1.25rem; margin-top: 3.5rem;
+}
+@media (min-width: 768px) { .love-notes-list { grid-template-columns: repeat(3, 1fr); } }
+.lcard {
+  height: 100%; display: flex; flex-direction: column; justify-content: space-between;
+  border-radius: var(--radius-card); background: var(--surface); padding: 1.75rem;
+  will-change: transform, opacity;
+}
+.lcard-quote { font-size: 2.25rem; line-height: 1; color: var(--accent-gold); }
+.lcard blockquote { font-size: 1.125rem; line-height: 1.5; color: var(--ink); margin-top: 1rem; }
+.lcard figcaption { border-top: 1px solid var(--hairline); padding-top: 1rem; margin-top: 1.5rem; }
+.lcard-name { font-weight: 500; color: var(--ink); font-size: 0.875rem; }
+.lcard-role { font-size: 0.875rem; color: var(--ink-soft); margin-top: 0.15rem; }
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+.footer {
+  background: var(--brand-deep); color: #ffffff;
+  border-radius: var(--radius-card-lg);
+  margin-top: 0.75rem;
+  padding: 3.5rem 1.5rem;
+}
+@media (min-width: 640px) { .footer { padding: 4rem 2.5rem; } }
+.footer-cta {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15); padding-bottom: 3.5rem;
+  display: flex; flex-direction: column; gap: 2rem; align-items: flex-start;
+}
+@media (min-width: 640px) { .footer-cta { flex-direction: row; align-items: flex-end; justify-content: space-between; } }
+.footer-cta > .pill { align-self: flex-start; }
+@media (min-width: 640px) { .footer-cta > .pill { align-self: flex-end; } }
+.footer-cta-line { font-size: 3.75rem; font-weight: 500; line-height: 0.92; letter-spacing: -0.02em; color: #ffffff; margin-top: 1rem; }
+
+.footer-trust {
+  display: flex; align-items: center; gap: 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15); padding: 1.75rem 0;
+  will-change: transform, opacity;
+}
+.footer-trust img {
+  width: 3.5rem; height: 3.5rem; flex: none;
+  border-radius: var(--radius-xl); object-fit: cover;
+  background: #ffffff;
+}
+.footer-trust strong { display: block; font-size: 0.875rem; font-weight: 500; line-height: 1.3; }
+.footer-trust span { display: block; font-size: 0.75rem; color: rgba(255, 255, 255, 0.6); line-height: 1.4; margin-top: 0.2rem; }
+
+.footer-cols {
+  padding: 3.5rem 0;
+  display: grid; grid-template-columns: 1fr; gap: 2.5rem;
+}
+@media (min-width: 768px) { .footer-cols { grid-template-columns: 1.4fr 1fr 1fr 1fr; } }
+.footer-brand { display: flex; align-items: center; gap: 0.5rem; font-size: 1.125rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.2em; color: #ffffff; }
+.footer-brand svg { width: 1.25rem; height: 1.25rem; flex: none; }
+.footer-brand-col { max-width: 20rem; }
+.footer-blurb { font-size: 0.875rem; color: rgba(255, 255, 255, 0.65); margin-top: 1rem; line-height: 1.5; }
+.footer-address { margin-top: 1.5rem; color: rgba(255, 255, 255, 0.8); font-size: 0.875rem; line-height: 1.7; }
+.footer-address a { transition: color 0.3s var(--ease-soft); }
+.footer-address a:hover { color: #ffffff; }
+.footer-address .muted { display: block; color: rgba(255, 255, 255, 0.55); }
+.footer-col h4 {
+  font-size: 0.75rem; font-weight: 500; text-transform: uppercase;
+  letter-spacing: 0.2em; color: rgba(255, 255, 255, 0.5);
+}
+.footer-col ul { margin-top: 1rem; font-size: 0.875rem; color: rgba(255, 255, 255, 0.8); }
+.footer-col li + li { margin-top: 0.75rem; }
+.footer-col a { transition: color 0.3s var(--ease-soft); }
+.footer-col a:hover { color: #ffffff; }
+
+.footer-bottom {
+  border-top: 1px solid rgba(255, 255, 255, 0.15); padding-top: 2rem;
+  font-size: 0.875rem; color: rgba(255, 255, 255, 0.6);
+  display: flex; flex-direction: column; gap: 1.25rem;
+}
+@media (min-width: 640px) { .footer-bottom { flex-direction: row; align-items: center; justify-content: space-between; } }
+.footer-nav { display: flex; align-items: center; gap: 1.25rem; flex-wrap: wrap; }
+.footer-nav a { transition: color 0.3s var(--ease-soft); }
+.footer-nav a:hover { color: #ffffff; }
+
+/* ============================================================
+   MODAL
+   ============================================================ */
+.modal {
+  position: fixed; inset: 0; z-index: 90;
+  display: flex; justify-content: flex-end; align-items: flex-end;
+  padding: 0.75rem;
+  pointer-events: none;
+}
+@media (min-width: 640px) {
+  .modal { align-items: center; justify-content: center; padding: 1.5rem; }
+}
+.modal-backdrop {
+  position: absolute; inset: 0;
+  background: rgba(var(--brand-deep-rgb), 0.4);
+  -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+  opacity: 0;
+}
+.modal.is-open { pointer-events: auto; }
+.modal-panel {
+  position: relative;
+  max-height: 92svh; overflow-y: auto;
+  width: 100%;
+  border-radius: var(--radius-card-lg);
+  background: var(--surface-card);
+  padding: 1.5rem;
+  color: var(--ink);
+  box-shadow: 0 1.5rem 3rem rgba(var(--brand-deep-rgb), 0.3);
+  opacity: 0;
+}
+@media (min-width: 640px) {
+  .modal-panel { max-width: 32rem; padding: 2rem; }
+}
+.modal-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; }
+.modal-title { font-size: 2.25rem; font-weight: 500; line-height: 0.95; letter-spacing: -0.02em; color: var(--ink); margin-top: 0.75rem; }
+@media (min-width: 640px) { .modal-title { font-size: 3rem; } }
+.icon-btn {
+  width: 2.5rem; height: 2.5rem; flex: none;
+  border-radius: var(--radius-pill); background: var(--surface);
+  display: grid; place-items: center; color: var(--ink);
+  transition: background-color 0.35s var(--ease-soft);
+}
+.icon-btn:hover { background: var(--hairline); }
+.icon-btn svg { width: 1.125rem; height: 1.125rem; will-change: transform; }
+
+.form { margin-top: 1.75rem; display: flex; flex-direction: column; gap: 1rem; }
+.field { display: flex; flex-direction: column; gap: 0.4rem; }
+.field label {
+  font-size: 0.75rem; font-weight: 500; text-transform: uppercase;
+  letter-spacing: 0.18em; color: var(--ink-soft);
+}
+.field input, .field textarea {
+  width: 100%; font-family: inherit; font-size: 0.875rem; color: var(--ink);
+  border-radius: var(--radius-xl); border: 1px solid var(--hairline);
+  background: var(--background); padding: 0.75rem 1rem;
+  transition: border-color 0.3s var(--ease-soft), box-shadow 0.3s var(--ease-soft);
+  resize: vertical;
+}
+.field input:focus, .field textarea:focus {
+  outline: none; border-color: var(--brand-light);
+  box-shadow: 0 0 0 3px rgba(201, 116, 138, 0.25);
+}
+.btn-submit {
+  align-self: flex-start;
+  border-radius: var(--radius-pill); background: var(--ink); color: #ffffff;
+  padding: 0.875rem 1.75rem; font-size: 0.875rem; font-weight: 500;
+  text-transform: uppercase; letter-spacing: 0.06em; line-height: 1;
+  transition: background-color 0.35s var(--ease-soft), opacity 0.3s;
+}
+.btn-submit:hover { background: var(--brand-deep); }
+.btn-submit[disabled] { opacity: 0.5; cursor: default; }
+.btn-submit[disabled]:hover { background: var(--ink); }
+
+.success {
+  margin-top: 2rem; border-radius: var(--radius-card);
+  background: var(--surface); padding: 1.5rem; text-align: center;
+}
+.success-badge {
+  width: 3rem; height: 3rem; border-radius: var(--radius-pill);
+  background: var(--brand); color: #ffffff; display: grid; place-items: center;
+  margin: 0 auto 0.75rem;
+}
+.success-badge svg { width: 1.25rem; height: 1.25rem; }
+.success strong { display: block; font-size: 1.125rem; font-weight: 500; color: var(--ink); }
+.success p { font-size: 0.875rem; color: var(--ink-soft); margin-top: 0.5rem; line-height: 1.5; }
+.success .btn-submit { align-self: center; margin-top: 1.25rem; }
+
+/* ============================================================
+   MENU OVERLAY
+   ============================================================ */
+.menu {
+  position: fixed; inset: 0; z-index: 70;
+  display: flex; flex-direction: column;
+  padding: 0.5rem;
+  pointer-events: none;
+}
+@media (min-width: 640px) { .menu { padding: 0.75rem; } }
+.menu.is-open { pointer-events: auto; }
+.menu-backdrop { position: absolute; inset: 0; background: var(--brand-deep); opacity: 0; }
+.menu-panel {
+  position: relative; flex: 1; display: flex; flex-direction: column;
+  padding: 1.5rem; opacity: 0;
+}
+@media (min-width: 640px) { .menu-panel { padding: 2rem 2.5rem; } }
+.menu-top { display: flex; align-items: center; justify-content: space-between; }
+.menu-brand {
+  display: flex; align-items: center; gap: 0.5rem;
+  font-size: 1rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.2em;
+  color: #ffffff; line-height: 1;
+}
+.menu-brand svg { width: 1.25rem; height: 1.25rem; flex: none; }
+.menu-close {
+  width: 2.5rem; height: 2.5rem; border-radius: var(--radius-pill);
+  background: rgba(255, 255, 255, 0.15); color: #ffffff;
+  display: grid; place-items: center;
+  transition: background-color 0.35s var(--ease-soft);
+}
+.menu-close:hover { background: rgba(255, 255, 255, 0.25); }
+.menu-close svg { width: 1.125rem; height: 1.125rem; will-change: transform; }
+.menu-nav {
+  flex: 1; display: flex; flex-direction: column; justify-content: center; gap: 0.5rem;
+}
+.menu-link {
+  display: block; font-size: 3rem; font-weight: 500; line-height: 1.05;
+  letter-spacing: -0.02em; color: #ffffff; will-change: transform, opacity;
+  transition: color 0.3s var(--ease-soft);
+}
+@media (min-width: 640px) { .menu-link { font-size: 4.5rem; } }
+.menu-link:hover { color: var(--brand-light); }
+.menu-bottom {
+  border-top: 1px solid rgba(255, 255, 255, 0.15); padding-top: 2rem;
+  display: flex; flex-direction: column; gap: 1.5rem; align-items: flex-start;
+}
+@media (min-width: 640px) { .menu-bottom { flex-direction: row; align-items: center; justify-content: space-between; } }
+.menu-social { display: flex; gap: 1.25rem; font-size: 0.875rem; color: rgba(255, 255, 255, 0.7); }
+.menu-social a { transition: color 0.3s var(--ease-soft); }
+.menu-social a:hover { color: #ffffff; }
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+</style>
+</head>
+<body>
+
+<!-- ============ LOADER ============ -->
+<div class="loader" id="loader" aria-hidden="true">
+  <div class="loader-word" id="loaderWord">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M3 11a9 9 0 0 1 18 0z" />
+      <path d="M12 11v5" />
+      <path d="M6.5 11 8 16M12 11v5M17.5 11 16 16" />
+    </svg>
+    <span>Parachute</span>
+  </div>
+  <div class="loader-track"><div class="loader-fill" id="loaderFill"></div></div>
+</div>
+
+<main id="top">
+
+  <!-- ============ HERO ============ -->
+  <section class="hero" id="hero">
+    <div class="hero-plate" id="heroPlate">
+      <img src="hero-wedding.webp"
+           alt="Bride and groom celebrating at their wedding reception" fetchpriority="high" decoding="async" />
+    </div>
+
+    <header class="site-header">
+      <nav class="header-nav" aria-label="Primary">
+        <a href="#services" data-scroll>Services</a>
+        <a href="#experience" data-scroll>Experience</a>
+      </nav>
+      <a class="header-brand" href="#top" data-scroll>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 11a9 9 0 0 1 18 0z" />
+          <path d="M12 11v5" />
+          <path d="M6.5 11 8 16M12 11v5M17.5 11 16 16" />
+        </svg>
+        <span>Parachute</span>
+      </a>
+      <div class="header-right">
+        <button class="header-book" data-open-modal>Enquire</button>
+        <button class="burger" id="burger" aria-label="Open menu">
+          <span></span><span></span>
+        </button>
+      </div>
+    </header>
+
+    <div class="hero-title-block">
+      <h1 class="hero-title" id="hero-title"></h1>
+    </div>
+
+    <div class="hero-bottom">
+      <p class="hero-tagline" id="hero-tagline"></p>
+
+      <div class="hero-cluster">
+        <div class="collection" id="collection">
+          <div class="collection-stage" id="collectionStage"></div>
+          <div class="dots dots-light" id="collectionDots"></div>
+        </div>
+
+        <article class="membership" id="membershipCard">
+          <div class="membership-left">
+            <div class="membership-value">100+</div>
+            <div class="membership-caption">Weddings crafted</div>
+            <div class="membership-avatars" aria-hidden="true">
+              <span style="background:#e8a5b0"></span>
+              <span style="background:#c9a66b"></span>
+              <span style="background:#c9748a"></span>
+              <span style="background:#ffffff"></span>
+            </div>
+          </div>
+          <img src="amritPortrait.webp"
+               alt="Amrit Banga, founder and lead planner" loading="lazy" decoding="async" />
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PHILOSOPHY ============ -->
+  <section class="philosophy" id="philosophy">
+    <div class="philosophy-top">
+      <div class="percent-badge" id="percentBadge">
+        <strong>100%</strong>
+        <span>Bespoke, detail&#8209;obsessed planning</span>
+      </div>
+      <article class="philosophy-badge-card" id="philosophyBadgeCard">
+        <div class="philosophy-index">#01</div>
+        <div>
+          <h3>A vendor curator, not a vendor list</h3>
+          <p>Every partner is hand&#8209;picked for craft, reliability and heart &mdash; then held to the same standard all the way to the last dance.</p>
+        </div>
+      </article>
+    </div>
+
+    <h2 class="ghost-heading" id="philosophy-title"></h2>
+
+    <div class="founder-wrap">
+      <figure class="founder-card" id="founderCard">
+        <div class="founder-photo" id="founderPhoto"></div>
+        <figcaption class="founder-caption" id="founderCaption">
+          <strong>Amrit Banga</strong>
+          <span>Founder &amp; Lead Planner</span>
+        </figcaption>
+      </figure>
+    </div>
+
+    <p class="philosophy-note" id="philosophyNote">
+      &ldquo;Weddings should feel joyful, seamless and stress&#8209;free &mdash; so the couple can truly be present for every moment of their celebration.&rdquo;
+    </p>
+  </section>
+
+  <!-- ============ SERVICES ============ -->
+  <section class="services" id="services">
+    <span class="eyebrow eyebrow-dark"><span class="eyebrow-dot"></span>How we can work together</span>
+    <h2 class="h2 h2-margin" id="services-title"></h2>
+    <ul class="services-list" id="servicesList"></ul>
+  </section>
+
+  <!-- ============ EXPERIENCE ============ -->
+  <section class="experience" id="experience">
+    <div class="experience-grid">
+      <div class="experience-intro">
+        <img class="experience-icon" id="experienceIcon"
+             src="amritPortrait.webp"
+             alt="Amrit Banga, founder and lead planner" loading="lazy" decoding="async" />
+        <h2 class="h2 experience-title" id="experience-title"></h2>
+        <p class="experience-body" id="experienceBody"></p>
+      </div>
+      <div class="experience-cards" id="experienceCards"></div>
+    </div>
+  </section>
+
+  <!-- ============ PROOF ============ -->
+  <section class="proof" id="proof">
+    <span class="eyebrow eyebrow-light"><span class="eyebrow-dot"></span>By the numbers</span>
+    <h2 class="h2 h2-margin" id="proof-title"></h2>
+    <dl class="proof-grid" id="proofGrid"></dl>
+  </section>
+
+  <!-- ============ LOVE NOTES ============ -->
+  <section class="love-notes" id="love-notes">
+    <span class="eyebrow eyebrow-dark"><span class="eyebrow-dot"></span>Kind words</span>
+    <h2 class="h2 h2-margin" id="love-notes-title"></h2>
+    <ul class="love-notes-list" id="loveNotesList"></ul>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="footer" id="contact">
+    <div class="footer-cta">
+      <div>
+        <span class="eyebrow eyebrow-light"><span class="eyebrow-dot"></span>Get started</span>
+        <p class="footer-cta-line" id="footer-cta-line"></p>
+      </div>
+      <button class="pill pill-light" id="footerCta" data-open-modal>
+        Book a consultation
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M5 12h14M13 6l6 6-6 6" />
+        </svg>
+      </button>
+    </div>
+
+    <div class="footer-trust" id="footerTrust">
+      <img src="wipc-certificate.webp" alt="WIPC certification held by Parachute Events" loading="lazy" decoding="async" />
+      <div>
+        <strong>Certified wedding planning professional</strong>
+        <span>WIPC&nbsp;&mdash;&nbsp;Wedding Industry Professionals Certification</span>
+      </div>
+    </div>
+
+    <div class="footer-cols">
+      <div class="footer-brand-col">
+        <div class="footer-brand">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 11a9 9 0 0 1 18 0z" />
+            <path d="M12 11v5" />
+            <path d="M6.5 11 8 16M12 11v5M17.5 11 16 16" />
+          </svg>
+          <span>Parachute</span>
+        </div>
+        <p class="footer-blurb">A wedding planning studio run by Amrit Banga &mdash; romantic, detail&#8209;obsessed, and quietly on top of everything.</p>
+        <address class="footer-address">
+          <a href="mailto:hello@parachuteevents.com">hello@parachuteevents.com</a><br />
+          <a href="tel:+910000000000">+91 00000 00000</a>
+          <span class="muted">Planning worldwide &mdash; including destination weddings</span>
+        </address>
+      </div>
+
+      <nav class="footer-col" aria-label="Explore">
+        <h4>Explore</h4>
+        <ul>
+          <li><a href="#philosophy" data-scroll>Philosophy</a></li>
+          <li><a href="#services" data-scroll>Services</a></li>
+          <li><a href="#experience" data-scroll>Experience</a></li>
+          <li><a href="#proof" data-scroll>By the numbers</a></li>
+        </ul>
+      </nav>
+
+      <nav class="footer-col" aria-label="Services">
+        <h4>Services</h4>
+        <ul>
+          <li><a href="#services" data-scroll>Full Planning</a></li>
+          <li><a href="#services" data-scroll>Partial Planning</a></li>
+          <li><a href="#services" data-scroll>Day&#8209;of Coordination</a></li>
+          <li><a href="#services" data-scroll>Destination</a></li>
+        </ul>
+      </nav>
+
+      <nav class="footer-col" aria-label="Company">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="#philosophy" data-scroll>About Amrit</a></li>
+          <li><a href="#love-notes" data-scroll>Love notes</a></li>
+          <li><a href="#contact" data-scroll>Contact</a></li>
+          <li><a href="#">Instagram</a></li>
+        </ul>
+      </nav>
+    </div>
+
+    <div class="footer-bottom">
+      <span>© 2026 Parachute Events. All rights reserved.</span>
+      <nav class="footer-nav" aria-label="Social">
+        <a href="#">Instagram</a>
+        <a href="#">Pinterest</a>
+      </nav>
+      <nav class="footer-nav" aria-label="Legal">
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+      </nav>
+    </div>
+  </footer>
+
+</main>
+
+<!-- ============ MODAL ============ -->
+<div class="modal" id="modal" role="presentation">
+  <div class="modal-backdrop" id="modalBackdrop"></div>
+  <div class="modal-panel" id="modalPanel" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-head">
+      <div>
+        <span class="eyebrow eyebrow-dark"><span class="eyebrow-dot"></span>Book a consultation</span>
+        <h2 class="modal-title" id="modalTitle"></h2>
+      </div>
+      <button class="icon-btn" id="modalClose" aria-label="Close dialog">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+          <path d="M6 6l12 12M18 6L6 18" />
+        </svg>
+      </button>
+    </div>
+
+    <form class="form" id="visitForm" novalidate>
+      <div class="field">
+        <label for="fName">Full name</label>
+        <input id="fName" name="name" type="text" placeholder="Priya Sharma" autocomplete="name" />
+      </div>
+      <div class="field">
+        <label for="fEmail">Email</label>
+        <input id="fEmail" name="email" type="email" placeholder="you@email.com" autocomplete="email" />
+      </div>
+      <div class="field">
+        <label for="fDate">Wedding date</label>
+        <input id="fDate" name="date" type="date" />
+      </div>
+      <div class="field">
+        <label for="fMsg">Your vision</label>
+        <textarea id="fMsg" name="message" rows="3" placeholder="An intimate garden ceremony followed by a long dinner under the stars…"></textarea>
+      </div>
+      <button type="submit" class="btn-submit" id="fSubmit">Request a consultation</button>
+    </form>
+
+    <div class="success" id="success" hidden>
+      <div class="success-badge">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M5 13l4 4L19 7" />
+        </svg>
+      </div>
+      <strong>Enquiry received</strong>
+      <p id="successText">Thank you — Amrit will be in touch to arrange your consultation.</p>
+      <button class="btn-submit" id="successDone">Done</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ MENU OVERLAY ============ -->
+<div class="menu" id="menu" role="presentation">
+  <div class="menu-backdrop" id="menuBackdrop"></div>
+  <div class="menu-panel" id="menuPanel">
+    <div class="menu-top">
+      <div class="menu-brand">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 11a9 9 0 0 1 18 0z" />
+          <path d="M12 11v5" />
+          <path d="M6.5 11 8 16M12 11v5M17.5 11 16 16" />
+        </svg>
+        <span>Parachute</span>
+      </div>
+      <button class="menu-close" id="menuClose" aria-label="Close menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+          <path d="M6 6l12 12M18 6L6 18" />
+        </svg>
+      </button>
+    </div>
+
+    <nav class="menu-nav" id="menuNav" aria-label="Menu">
+      <a class="menu-link" href="#philosophy" data-scroll>Philosophy</a>
+      <a class="menu-link" href="#services" data-scroll>Services</a>
+      <a class="menu-link" href="#experience" data-scroll>Experience</a>
+      <a class="menu-link" href="#love-notes" data-scroll>Love notes</a>
+      <a class="menu-link" href="#contact" data-scroll>Contact</a>
+    </nav>
+
+    <div class="menu-bottom">
+      <button class="pill pill-light" id="menuBook">
+        Book a consultation
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M5 12h14M13 6l6 6-6 6" />
+        </svg>
+      </button>
+      <nav class="menu-social" aria-label="Social">
+        <a href="#">Instagram</a>
+        <a href="#">Pinterest</a>
+      </nav>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+import Lenis from 'lenis';
+
+const html = document.documentElement;
+const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const canHover = () => window.innerWidth > 768;
+
+/* ------------------------------------------------------------
+   Adaptive root font size (scale up above 1920)
+------------------------------------------------------------ */
+const FONT_BASE = 16, BASE_W = 1920, COEF = 0.6666;
+function setAdaptiveFontSize() {
+  const reduction = ((BASE_W - window.innerWidth) / BASE_W) * 100 * COEF;
+  const size = FONT_BASE - (FONT_BASE * reduction) / 100;
+  if (size > FONT_BASE) html.style.fontSize = size + 'px';
+  else html.style.removeProperty('font-size');
+}
+setAdaptiveFontSize();
+window.addEventListener('resize', setAdaptiveFontSize);
+
+/* ------------------------------------------------------------
+   Lenis smooth scroll
+------------------------------------------------------------ */
+window.scrollTo(0, 0);
+const lenis = new Lenis({ smoothWheel: true });
+let scrollLocked = false;
+function lockScroll() {
+  if (scrollLocked) return;
+  scrollLocked = true;
+  lenis.stop();
+  html.style.position = 'relative';
+  html.style.overflow = 'hidden';
+  html.style.height = '100%';
+}
+function unlockScroll() {
+  if (!scrollLocked) return;
+  scrollLocked = false;
+  lenis.start();
+  html.style.removeProperty('position');
+  html.style.removeProperty('overflow');
+  html.style.removeProperty('height');
+}
+
+const parallaxItems = [];
+function addParallax(item) { parallaxItems.push(item); return item; }
+function dropParallax(group) {
+  for (let i = parallaxItems.length - 1; i >= 0; i--) {
+    if (parallaxItems[i].group === group) parallaxItems.splice(i, 1);
+  }
+}
+function updateParallax() {
+  const vh = window.innerHeight;
+  for (let i = parallaxItems.length - 1; i >= 0; i--) {
+    const p = parallaxItems[i];
+    if (!p.el.isConnected) { parallaxItems.splice(i, 1); continue; }
+    const rect = p.section.getBoundingClientRect();
+    if (rect.bottom < -200 || rect.top > vh + 200) continue;
+    const t = Math.min(Math.max((vh - rect.top) / (vh + rect.height), 0), 1);
+    const v = p.from + (p.to - p.from) * t;
+    p.el.style.transform = p.axis === 'x'
+      ? `translateX(${v.toFixed(3)}%)`
+      : `translateY(${v.toFixed(3)}%)`;
+  }
+}
+
+function raf(t) {
+  lenis.raf(t);
+  updateParallax();
+  requestAnimationFrame(raf);
+}
+requestAnimationFrame(raf);
+
+/* ------------------------------------------------------------
+   Easings
+------------------------------------------------------------ */
+const easeOutExpo = (t) => (t >= 1 ? 1 : 1 - Math.pow(2, -10 * t));
+const easeOutQuart = (t) => 1 - Math.pow(1 - t, 4);
+const easeInOutCubic = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
+
+/* ------------------------------------------------------------
+   Spring + tween helpers
+------------------------------------------------------------ */
+function springMulti({ from, to, config, onUpdate, onRest, delay = 0 }) {
+  if (reduced) { onUpdate({ ...to }); onRest && onRest(); return { stop() {} }; }
+  const tension = (config && config.tension) || 170;
+  const friction = (config && config.friction) || 26;
+  const keys = Object.keys(to);
+  const x = {}, v = {};
+  keys.forEach((k) => { x[k] = from[k] || 0; v[k] = 0; });
+  let raf = null, last = 0, start = null;
+  function step(now) {
+    if (start === null) start = now;
+    const dt = Math.min(last ? (now - last) / 1000 : 0.016, 0.064);
+    last = now;
+    const elapsed = (now - start - delay) / 1000;
+    if (elapsed < 0) { raf = requestAnimationFrame(step); return; }
+    let moving = false;
+    for (let i = 0; i < keys.length; i++) {
+      const k = keys[i];
+      v[k] += (-tension * (x[k] - to[k]) - friction * v[k]) * dt;
+      x[k] += v[k] * dt;
+      if (Math.abs(x[k] - to[k]) > 0.0006 || Math.abs(v[k]) > 0.0006) moving = true;
+      else { x[k] = to[k]; v[k] = 0; }
+    }
+    onUpdate(x);
+    if (moving && now - start < 5000) raf = requestAnimationFrame(step);
+    else { keys.forEach((k) => { x[k] = to[k]; v[k] = 0; }); onUpdate(x); raf = null; onRest && onRest(); }
+  }
+  raf = requestAnimationFrame(step);
+  return { stop() { if (raf) cancelAnimationFrame(raf); raf = null; } };
+}
+
+function tween({ from, to, duration, easing, onUpdate, onRest, delay = 0 }) {
+  if (reduced) { onUpdate(to); onRest && onRest(); return { stop() {} }; }
+  let raf = null, start = null;
+  function step(now) {
+    if (start === null) start = now;
+    const t = Math.min(Math.max((now - start - delay) / duration, 0), 1);
+    onUpdate(from + (to - from) * easing(t));
+    if (t >= 1) { raf = null; onRest && onRest(); return; }
+    raf = requestAnimationFrame(step);
+  }
+  raf = requestAnimationFrame(step);
+  return { stop() { if (raf) cancelAnimationFrame(raf); raf = null; } };
+}
+
+/* ------------------------------------------------------------
+   Element appliers
+------------------------------------------------------------ */
+function applier(el, extra) {
+  return (v) => {
+    const t = [];
+    if (extra) t.push(extra);
+    if (v.x) t.push(`translateX(${v.x}px)`);
+    if (v.y) t.push(`translateY(${v.y}px)`);
+    if (v.scale !== undefined && v.scale !== 1) t.push(`scale(${v.scale})`);
+    if (v.rotate) t.push(`rotate(${v.rotate}deg)`);
+    el.style.transform = t.length ? t.join(' ') : '';
+    if (v.opacity !== undefined) el.style.opacity = v.opacity;
+  };
+}
+
+const OBSERVER = new IntersectionObserver((entries) => {
+  entries.forEach((e) => {
+    if (!e.isIntersecting) return;
+    const fn = e.target.__reveal;
+    if (fn) { e.target.__reveal = null; OBSERVER.unobserve(e.target); fn(); }
+  });
+}, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+
+function inview(el, { from, to, config, delay = 0, extra = '' }) {
+  const apply = applier(el, extra);
+  apply(from);
+  // reduced motion: never leave a gap between "from" and "to"
+  const wait = reduced ? 0 : delay;
+  el.__reveal = () => {
+    setTimeout(() => springMulti({ from, to, config, onUpdate: apply }), wait);
+  };
+  OBSERVER.observe(el);
+}
+
+function hoverSpring(el, enter, leave, config, extra = '') {
+  const apply = applier(el, extra);
+  let current = null;
+  const run = (from, to) => {
+    if (current) current.stop();
+    current = springMulti({ from, to, config, onUpdate: apply });
+  };
+  el.addEventListener('pointerenter', () => { if (canHover()) run(enter, leave); });
+  el.addEventListener('pointerleave', () => { if (canHover()) run(leave, enter); });
+}
+
+function hoverRotate(el, deg, config) {
+  let a = null, b = null;
+  el.addEventListener('pointerenter', () => {
+    if (!canHover()) return;
+    if (b) b.stop();
+    a = springMulti({ from: { rotate: 0 }, to: { rotate: deg }, config, onUpdate: applier(el) });
+  });
+  el.addEventListener('pointerleave', () => {
+    if (!canHover()) return;
+    if (a) a.stop();
+    b = springMulti({ from: { rotate: deg }, to: { rotate: 0 }, config, onUpdate: applier(el) });
+  });
+}
+
+/* ------------------------------------------------------------
+   Text engine: clip-mask reveals
+------------------------------------------------------------ */
+function setStackedLines(el, lines, opts = {}) {
+  const { stagger = 120, baseDelay = 0, duration = 950, easing = easeOutExpo, yOut = 115 } = opts;
+  el.textContent = '';
+  const inners = [];
+  lines.forEach((line) => {
+    const clip = document.createElement('span');
+    clip.className = 'sl-line';
+    const inner = document.createElement('span');
+    inner.className = 'sl-in';
+    inner.textContent = line;
+    clip.appendChild(inner);
+    el.appendChild(clip);
+    inners.push(inner);
+  });
+  inners.forEach((inner, i) => {
+    tween({
+      from: 0, to: 1, delay: baseDelay + i * stagger, duration, easing,
+      onUpdate: (p) => { inner.style.transform = `translateY(${(yOut * (1 - p)).toFixed(3)}%)`; }
+    });
+  });
+}
+
+function setWords(el, text, opts = {}) {
+  const {
+    stagger = 140, baseDelay = 0, duration = 1100, easing = easeOutExpo,
+    yOut = 115, fade = true, pad = 0.12
+  } = opts;
+  el.textContent = '';
+  const words = text.split(/\s+/).filter(Boolean);
+  const inners = [];
+  words.forEach((w, i) => {
+    const clip = document.createElement('span');
+    clip.className = 'tw';
+    clip.style.paddingBottom = pad + 'em';
+    clip.style.marginBottom = -pad + 'em';
+    const inner = document.createElement('span');
+    inner.className = 'tw-in';
+    inner.textContent = w;
+    clip.appendChild(inner);
+    el.appendChild(clip);
+    if (i < words.length - 1) el.appendChild(document.createTextNode(' '));
+    inners.push(inner);
+  });
+  inners.forEach((inner, i) => {
+    tween({
+      from: 0, to: 1, delay: baseDelay + i * stagger, duration, easing,
+      onUpdate: (p) => {
+        inner.style.transform = `translateY(${(yOut * (1 - p)).toFixed(3)}%)`;
+        if (fade) inner.style.opacity = p;
+      }
+    });
+  });
+  return inners;
+}
+
+function setWordFade(el, text, opts = {}) {
+  const { stagger = 28, baseDelay = 0, duration = 700, easing = easeOutQuart, yOut = 18 } = opts;
+  el.textContent = '';
+  const words = text.split(/\s+/).filter(Boolean);
+  const inners = [];
+  words.forEach((w, i) => {
+    const clip = document.createElement('span');
+    clip.className = 'fw';
+    const inner = document.createElement('span');
+    inner.className = 'fw-in';
+    inner.textContent = w;
+    clip.appendChild(inner);
+    el.appendChild(clip);
+    if (i < words.length - 1) el.appendChild(document.createTextNode(' '));
+    inners.push(inner);
+  });
+  inners.forEach((inner, i) => {
+    tween({
+      from: 0, to: 1, delay: baseDelay + i * stagger, duration, easing,
+      onUpdate: (p) => {
+        inner.style.transform = `translateY(${(yOut * (1 - p)).toFixed(3)}%)`;
+        inner.style.opacity = p;
+      }
+    });
+  });
+}
+
+/* ------------------------------------------------------------
+   Ready gate (loader)
+------------------------------------------------------------ */
+let ready = false;
+const readyFns = [];
+function onReady(fn) { if (ready) fn(); else readyFns.push(fn); }
+
+/* ============================================================
+   HERO
+   ============================================================ */
+const HERO_HEADLINE = 'Craft Weddings That Feel Like You';
+const heroPlate = document.getElementById('heroPlate');
+const heroTitleEl = document.getElementById('hero-title');
+addParallax({ el: heroPlate, section: heroPlate.closest('.hero'), axis: 'y', from: 0, to: 12 });
+
+/* Measure the headline once at a reference size and publish its advance
+   width in em. Because every other metric on .hero-title is em-based, the
+   ratio is size-independent, so the CSS cap stays correct at any viewport
+   and the line can never overflow or clip. */
+function fitHeroTitle() {
+  const prev = heroTitleEl.style.fontSize;
+  heroTitleEl.style.fontSize = '100px';
+  const w = heroTitleEl.scrollWidth;
+  heroTitleEl.style.fontSize = prev;
+  if (w > 0) heroTitleEl.style.setProperty('--hero-em', (w / 100).toFixed(4));
+}
+
+onReady(() => {
+  setWords(heroTitleEl, HERO_HEADLINE, {
+    stagger: 140, duration: 1100, easing: easeOutExpo, yOut: 115
+  });
+  fitHeroTitle();
+  setStackedLines(document.getElementById('hero-tagline'), ['Dream It,', 'Live It'], {
+    stagger: 110, baseDelay: 350, duration: 900, easing: easeOutExpo
+  });
+});
+
+// Hero cluster is gated on the loader: hide it from first paint (behind the
+// curtain) so it can never flash, then let the inview springs play.
+const HERO_GATED = [
+  { el: document.getElementById('collection'), delay: 650 },
+  { el: document.getElementById('membershipCard'), delay: 780 }
+];
+HERO_GATED.forEach((g) => applier(g.el)({ opacity: 0, y: 28 }));
+onReady(() => {
+  HERO_GATED.forEach((g) => inview(g.el, {
+    from: { opacity: 0, y: 28 }, to: { opacity: 1, y: 0 },
+    config: { tension: 200, friction: 26 }, delay: g.delay
+  }));
+});
+
+/* ---- Portfolio carousel ---- */
+const COLLECTIONS = [
+  { img: 'portfolio-1.webp', brand: 'Garden Ceremony', title: 'Intimate Vows', cta: 'See the story', alt: 'Floral styling at an intimate garden wedding' },
+  { img: 'portfolio-2.webp', brand: 'Grand Ballroom', title: 'Black Tie', cta: 'See the story', alt: 'Reception set-up in a grand ballroom' },
+  { img: 'portfolio-3.webp', brand: 'Coastal Vows', title: 'Destination', cta: 'See the story', alt: 'Outdoor ceremony set-up on the coast' }
+];
+const COLLECTIONS_MS = 3800;
+const collectionStage = document.getElementById('collectionStage');
+const collectionDots = document.getElementById('collectionDots');
+let collectionIndex = 0, collectionTimer = null;
+
+COLLECTIONS.forEach((_, i) => {
+  const b = document.createElement('button');
+  b.className = 'dot-btn';
+  b.type = 'button';
+  b.setAttribute('aria-label', 'Go to slide ' + (i + 1));
+  if (i === 0) b.setAttribute('aria-current', 'true');
+  b.innerHTML = '<span class="dot"></span>';
+  b.addEventListener('click', () => { setCollection(i); restartCollection(); });
+  collectionDots.appendChild(b);
+});
+
+function collectionCard(data) {
+  const card = document.createElement('article');
+  card.className = 'collection-card';
+  card.innerHTML =
+    '<img src="' + data.img + '" alt="' + data.alt + '" loading="lazy" decoding="async" />' +
+    '<div class="collection-meta">' +
+      '<span class="collection-brand">' + data.brand + '</span>' +
+      '<span class="collection-title">' + data.title + '</span>' +
+      '<a class="collection-cta" href="#experience" data-scroll>' + data.cta + ' →</a>' +
+    '</div>';
+  return card;
+}
+
+function setCollection(next) {
+  collectionIndex = (next + COLLECTIONS.length) % COLLECTIONS.length;
+  const outgoing = [...collectionStage.children];
+  const incoming = collectionCard(COLLECTIONS[collectionIndex]);
+  collectionStage.appendChild(incoming);
+  const applyIn = applier(incoming);
+  springMulti({
+    from: { opacity: 0, y: 16, scale: 0.96 }, to: { opacity: 1, y: 0, scale: 1 },
+    config: { tension: 210, friction: 24 }, onUpdate: applyIn,
+    onRest: () => { incoming.style.transform = ''; incoming.style.opacity = ''; }
+  });
+  // every card still on stage fades out, so rapid dot clicks never stack up
+  outgoing.forEach((card, i) => {
+    const applyOut = applier(card);
+    tween({
+      from: 1, to: 0, duration: 320, easing: easeOutQuart, delay: i * 40,
+      onUpdate: (p) => { applyOut({ opacity: p, y: 16 * (1 - p), scale: 0.96 + 0.04 * p }); },
+      onRest: () => card.remove()
+    });
+  });
+  [...collectionDots.children].forEach((b, i) => {
+    if (i === collectionIndex) b.setAttribute('aria-current', 'true');
+    else b.removeAttribute('aria-current');
+  });
+}
+
+function restartCollection() {
+  if (collectionTimer) clearInterval(collectionTimer);
+  collectionTimer = setInterval(() => setCollection(collectionIndex + 1), COLLECTIONS_MS);
+}
+onReady(() => { setCollection(0); restartCollection(); });
+
+/* ============================================================
+   PHILOSOPHY
+   ============================================================ */
+const PHILOSOPHY_WORDS = ['Intentional', 'Design', 'Flawless', 'Execution'];
+const GHOST_PARALLAX = [
+  { axis: 'x', from: -3, to: 3 },
+  { axis: 'x', from: 3, to: -3 },
+  { axis: 'x', from: -2, to: 4 },
+  { axis: 'x', from: 4, to: -3 }
+];
+const philosophyTitle = document.getElementById('philosophy-title');
+const philosophySection = document.getElementById('philosophy');
+
+function renderGhost() {
+  philosophyTitle.textContent = '';
+  dropParallax('ghost');
+  [0, 2].forEach((rowStart) => {
+    const row = document.createElement('span');
+    row.className = 'ghost-row';
+    for (let k = 0; k < 2; k++) {
+      const i = rowStart + k;
+      const clip = document.createElement('span');
+      clip.className = 'tw' + (i === 2 ? ' ghost-word-ink' : '');
+      const inner = document.createElement('span');
+      inner.className = 'tw-in';
+      inner.textContent = PHILOSOPHY_WORDS[i];
+      clip.appendChild(inner);
+      row.appendChild(clip);
+      if (i < 3) {
+        addParallax({ el: clip, section: philosophySection, axis: 'x', from: GHOST_PARALLAX[i].from, to: GHOST_PARALLAX[i].to, group: 'ghost' });
+      }
+      tween({
+        from: 0, to: 1, delay: i * 90, duration: 700, easing: easeOutExpo,
+        onUpdate: (p) => {
+          inner.style.transform = `translateY(${(115 * (1 - p)).toFixed(3)}%)`;
+          inner.style.opacity = p;
+        }
+      });
+    }
+    philosophyTitle.appendChild(row);
+  });
+}
+renderGhost();
+
+const founderPhoto = document.getElementById('founderPhoto');
+const FOUNDER = { img: 'amritPortrait.webp', alt: 'Amrit Banga, founder and lead planner' };
+(function renderFounder() {
+  const img = document.createElement('img');
+  img.src = FOUNDER.img;
+  img.alt = FOUNDER.alt;
+  img.loading = 'lazy';
+  img.decoding = 'async';
+  founderPhoto.appendChild(img);
+  springMulti({
+    from: { opacity: 0 }, to: { opacity: 1 },
+    config: { tension: 260, friction: 26 },
+    onUpdate: (v) => { img.style.opacity = v.opacity; },
+    onRest: () => { img.style.opacity = ''; }
+  });
+})();
+
+inview(document.getElementById('percentBadge'), {
+  from: { opacity: 0, scale: 0.9 }, to: { opacity: 1, scale: 1 },
+  config: { tension: 220, friction: 22 }
+});
+inview(document.getElementById('philosophyBadgeCard'), {
+  from: { opacity: 0, y: 24 }, to: { opacity: 1, y: 0 },
+  config: { tension: 200, friction: 26 }, delay: 120
+});
+inview(document.getElementById('founderCard'), {
+  from: { opacity: 0, y: 60, scale: 0.92 }, to: { opacity: 1, y: 0, scale: 1 },
+  config: { tension: 170, friction: 26 }, extra: 'rotate(-6deg)'
+});
+inview(document.getElementById('philosophyNote'), {
+  from: { opacity: 0, y: 20 }, to: { opacity: 1, y: 0 },
+  config: { tension: 200, friction: 26 }, delay: 220
+});
+
+/* ============================================================
+   SERVICES
+   ============================================================ */
+const SERVICES = [
+  { i: '01', name: 'Full Planning', desc: 'End-to-end design, logistics and execution for couples who want it all handled.' },
+  { i: '02', name: 'Partial Planning', desc: 'Design direction and vendor curation, with you steering the key decisions.' },
+  { i: '03', name: 'Day-of Coordination', desc: 'Final-month alignment and on-the-day management, so you are a guest at your own wedding.' },
+  { i: '04', name: 'Destination Weddings', desc: 'Full planning across borders — venues, travel, local vendors and legalities.' }
+];
+const servicesList = document.getElementById('servicesList');
+SERVICES.forEach((s, idx) => {
+  const li = document.createElement('li');
+  const a = document.createElement('a');
+  a.className = 'srow';
+  a.href = '#contact';
+  a.dataset.scroll = '';
+  a.innerHTML =
+    '<span class="srow-index">' + s.i + '</span>' +
+    '<span class="srow-body"><span class="srow-name">' + s.name + '</span>' +
+    '<span class="srow-desc">' + s.desc + '</span></span>' +
+    '<span class="srow-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">' +
+    '<path d="M5 12h14M13 6l6 6-6 6" /></svg></span>';
+  li.appendChild(a);
+  servicesList.appendChild(li);
+  inview(a, {
+    from: { opacity: 0, y: 26 }, to: { opacity: 1, y: 0 },
+    config: { tension: 190, friction: 26 }, delay: idx * 90
+  });
+  const arrow = a.querySelector('.srow-arrow');
+  hoverSpring(
+    arrow,
+    { x: 0, opacity: 0.55 },
+    { x: 8, opacity: 1 },
+    { tension: 300, friction: 20 }
+  );
+});
+
+setStackedLines(document.getElementById('services-title'), ['Every way', 'to begin']);
+
+/* ============================================================
+   EXPERIENCE
+   ============================================================ */
+const EXPERIENCE_CARDS = [
+  { tone: 'rose', img: 'portfolio-4.webp', name: 'Venue Partnerships', desc: 'Curated access to distinctive estates, gardens, lofts and coastlines.', alt: 'Wedding venue styled by Parachute Events' },
+  { tone: 'gold', img: 'portfolio-5.webp', name: 'Vendor Network', desc: 'Florals, photography, catering and rentals — every partner vetted.', alt: 'Wedding florals and table styling' }
+];
+const experienceCards = document.getElementById('experienceCards');
+EXPERIENCE_CARDS.forEach((c, i) => {
+  const fig = document.createElement('figure');
+  fig.className = 'ecard';
+  fig.innerHTML =
+    '<div class="ecard-media"><img src="' + c.img + '" alt="' + c.alt + '" loading="lazy" decoding="async" /></div>' +
+    '<figcaption class="ecard-caption tone-' + c.tone + '">' +
+      '<strong>' + c.name + '</strong><span>' + c.desc + '</span>' +
+    '</figcaption>';
+  experienceCards.appendChild(fig);
+  inview(fig, {
+    from: { opacity: 0, y: 48 }, to: { opacity: 1, y: 0 },
+    config: { tension: 180, friction: 26 }, delay: i * 140
+  });
+  const media = fig.querySelector('.ecard-media');
+  hoverSpring(media, { scale: 1 }, { scale: 1.03 }, { tension: 300, friction: 22 });
+});
+
+inview(document.getElementById('experienceIcon'), {
+  from: { opacity: 0, scale: 0.85 }, to: { opacity: 1, scale: 1 },
+  config: { tension: 240, friction: 20 }
+});
+setStackedLines(document.getElementById('experience-title'), ['The Parachute', 'Experience'], { stagger: 120 });
+setWordFade(
+  document.getElementById('experienceBody'),
+  'As a true romantic and detail-obsessed planner, I started this company because I believe weddings should feel joyful, seamless and stress free. My goal is to take care of every detail behind the scenes so couples can truly be present and enjoy every moment of their celebration.',
+  { stagger: 28, baseDelay: 250, duration: 700, easing: easeOutQuart, yOut: 18 }
+);
+
+/* ============================================================
+   PROOF
+   ============================================================ */
+const STATS = [
+  { value: '100+', label: 'Weddings crafted' },
+  { value: '50+', label: 'Venues partnered' },
+  { value: '5★', label: 'Average client rating' },
+  { value: '8+', label: 'Years planning' }
+];
+const proofGrid = document.getElementById('proofGrid');
+STATS.forEach((s, i) => {
+  const cell = document.createElement('div');
+  cell.className = 'stat';
+  cell.innerHTML =
+    '<dt class="sr-only">' + s.label + '</dt>' +
+    '<dd><span class="stat-value">' + s.value + '</span><span class="stat-label">' + s.label + '</span></dd>';
+  proofGrid.appendChild(cell);
+  inview(cell, {
+    from: { opacity: 0, y: 30 }, to: { opacity: 1, y: 0 },
+    config: { tension: 180, friction: 24 }, delay: i * 110
+  });
+});
+setStackedLines(document.getElementById('proof-title'), ['A studio that', 'keeps count']);
+
+/* ============================================================
+   LOVE NOTES
+   ============================================================ */
+const QUOTES = [
+  { q: 'Amrit held every detail so calmly that we barely noticed the planning — we just got to be there.', name: 'Priya & Arjun', role: 'Full Planning' },
+  { q: 'Her taste is unmatched. The florals, the food, the music — everything somehow felt exactly like us.', name: 'Meera & Rohan', role: 'Destination Wedding' },
+  { q: 'The calm she brought on the morning of the wedding was worth every rupee of the fee.', name: 'Anjali & Karan', role: 'Day-of Coordination' }
+];
+const loveNotesList = document.getElementById('loveNotesList');
+QUOTES.forEach((t, i) => {
+  const li = document.createElement('li');
+  const card = document.createElement('figure');
+  card.className = 'lcard';
+  card.innerHTML =
+    '<div><span class="lcard-quote">&ldquo;</span>' +
+    '<blockquote>' + t.q + '</blockquote></div>' +
+    '<figcaption><div class="lcard-name">' + t.name + '</div>' +
+    '<div class="lcard-role">' + t.role + '</div></figcaption>';
+  li.appendChild(card);
+  loveNotesList.appendChild(li);
+  inview(card, {
+    from: { opacity: 0, y: 40 }, to: { opacity: 1, y: 0 },
+    config: { tension: 180, friction: 26 }, delay: i * 120
+  });
+  hoverSpring(card, { y: 0 }, { y: -8 }, { tension: 300, friction: 22 });
+});
+setStackedLines(document.getElementById('love-notes-title'), ['Love notes', 'from couples']);
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+setStackedLines(document.getElementById('footer-cta-line'), ['Ready to', 'begin?']);
+inview(document.getElementById('footerCta'), {
+  from: { opacity: 0, y: 20 }, to: { opacity: 1, y: 0 },
+  config: { tension: 200, friction: 24 }, delay: 150
+});
+inview(document.getElementById('footerTrust'), {
+  from: { opacity: 0, y: 20 }, to: { opacity: 1, y: 0 },
+  config: { tension: 200, friction: 26 }, delay: 240
+});
+document.querySelectorAll('.pill svg').forEach((s) => {
+  hoverSpring(s, { x: 0 }, { x: 5 }, { tension: 320, friction: 20 });
+});
+
+/* ============================================================
+   Smooth scroll links
+   ============================================================ */
+document.addEventListener('click', (e) => {
+  const a = e.target.closest('a[href^="#"]');
+  if (!a) return;
+  const id = a.getAttribute('href');
+  if (id === '#' || id.length < 2) return;
+  const target = document.querySelector(id);
+  if (!target) return;
+  e.preventDefault();
+  if (menuEl.classList.contains('is-open')) closeMenu();
+  lenis.scrollTo(target, { duration: 1.2 });
+});
+
+/* ============================================================
+   CONTACT MODAL
+   ============================================================ */
+const modal = document.getElementById('modal');
+const modalBackdrop = document.getElementById('modalBackdrop');
+const modalPanel = document.getElementById('modalPanel');
+const modalClose = document.getElementById('modalClose');
+const visitForm = document.getElementById('visitForm');
+const fSubmit = document.getElementById('fSubmit');
+const success = document.getElementById('success');
+const successText = document.getElementById('successText');
+const fName = document.getElementById('fName');
+let modalOpen = false, resetTimer = null;
+
+function setStackedModalTitle() {
+  setStackedLines(document.getElementById('modalTitle'), ['Let’s talk', 'about your', 'wedding'], { stagger: 90, duration: 800 });
+}
+
+function openModal() {
+  if (modalOpen) return;
+  if (resetTimer) { clearTimeout(resetTimer); resetTimer = null; }
+  modalOpen = true;
+  modal.classList.add('is-open');
+  lockScroll();
+  springMulti({ from: { opacity: 0 }, to: { opacity: 1 }, config: { tension: 240, friction: 30 }, onUpdate: applier(modalBackdrop) });
+  springMulti({
+    from: { opacity: 0, y: 28, scale: 0.96 }, to: { opacity: 1, y: 0, scale: 1 },
+    config: { tension: 240, friction: 26 }, onUpdate: applier(modalPanel),
+    onRest: () => { modalPanel.style.transform = ''; modalPanel.style.opacity = '1'; }
+  });
+  setStackedModalTitle();
+  setTimeout(() => { if (modalOpen) fName.focus(); }, 120);
+}
+
+function closeModal() {
+  if (!modalOpen) return;
+  modalOpen = false;
+  modal.classList.remove('is-open');
+  unlockScroll();
+  springMulti({ from: { opacity: 1 }, to: { opacity: 0 }, config: { tension: 240, friction: 30 }, onUpdate: applier(modalBackdrop), onRest: () => { modalBackdrop.style.opacity = '0'; } });
+  springMulti({ from: { opacity: 1, y: 0, scale: 1 }, to: { opacity: 0, y: 28, scale: 0.96 }, config: { tension: 240, friction: 26 }, onUpdate: applier(modalPanel) });
+  modalClose.focus();
+  resetTimer = setTimeout(() => {
+    visitForm.reset();
+    fSubmit.disabled = false;
+    fSubmit.textContent = 'Request a consultation';
+    success.hidden = true;
+    visitForm.hidden = false;
+  }, 350);
+}
+
+document.querySelectorAll('[data-open-modal]').forEach((b) => b.addEventListener('click', openModal));
+modalBackdrop.addEventListener('click', closeModal);
+modalClose.addEventListener('click', closeModal);
+document.getElementById('successDone').addEventListener('click', closeModal);
+
+visitForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+  fSubmit.disabled = true;
+  fSubmit.textContent = 'Sending…';
+  setTimeout(() => {
+    const first = (fName.value || '').trim().split(/\s+/)[0];
+    successText.textContent = 'Thank you, ' + (first || 'there') + ' — Amrit will be in touch shortly to arrange your consultation.';
+    visitForm.hidden = true;
+    success.hidden = false;
+    document.getElementById('successDone').focus();
+  }, 900);
+});
+
+/* ============================================================
+   MENU OVERLAY
+   ============================================================ */
+const menuEl = document.getElementById('menu');
+const menuBackdrop = document.getElementById('menuBackdrop');
+const menuPanel = document.getElementById('menuPanel');
+const menuLinks = [...document.querySelectorAll('.menu-link')];
+let menuOpen = false;
+
+function playMenuLinks() {
+  menuLinks.forEach((l, i) => {
+    const apply = applier(l);
+    apply({ opacity: 0, y: 28 });
+    setTimeout(() => {
+      springMulti({
+        from: { opacity: 0, y: 28 }, to: { opacity: 1, y: 0 },
+        config: { tension: 200, friction: 26 }, onUpdate: apply,
+        onRest: () => { l.style.transform = ''; l.style.opacity = ''; }
+      });
+    }, 120 + i * 70);
+  });
+}
+playMenuLinks();
+
+function openMenu() {
+  if (menuOpen) return;
+  menuOpen = true;
+  menuEl.classList.add('is-open');
+  lockScroll();
+  springMulti({ from: { opacity: 0 }, to: { opacity: 1 }, config: { tension: 260, friction: 30 }, onUpdate: applier(menuBackdrop) });
+  springMulti({
+    from: { opacity: 0, y: -24 }, to: { opacity: 1, y: 0 },
+    config: { tension: 220, friction: 28 }, onUpdate: applier(menuPanel),
+    onRest: () => { menuPanel.style.transform = ''; menuPanel.style.opacity = '1'; }
+  });
+  playMenuLinks();
+}
+
+function closeMenu() {
+  if (!menuOpen) return;
+  menuOpen = false;
+  menuEl.classList.remove('is-open');
+  unlockScroll();
+  springMulti({ from: { opacity: 1 }, to: { opacity: 0 }, config: { tension: 260, friction: 30 }, onUpdate: applier(menuBackdrop), onRest: () => { menuBackdrop.style.opacity = '0'; } });
+  springMulti({ from: { opacity: 1, y: 0 }, to: { opacity: 0, y: -24 }, config: { tension: 220, friction: 28 }, onUpdate: applier(menuPanel) });
+  document.getElementById('burger').focus();
+}
+
+document.getElementById('burger').addEventListener('click', openMenu);
+document.getElementById('menuClose').addEventListener('click', closeMenu);
+menuBackdrop.addEventListener('click', closeMenu);
+document.getElementById('menuBook').addEventListener('click', () => { closeMenu(); setTimeout(openModal, 260); });
+hoverRotate(modalClose.querySelector('svg'), 90, { tension: 300, friction: 18 });
+hoverRotate(document.getElementById('menuClose').querySelector('svg'), 90, { tension: 300, friction: 18 });
+
+document.addEventListener('keydown', (e) => {
+  if (e.key !== 'Escape') return;
+  if (modalOpen) closeModal();
+  else if (menuOpen) closeMenu();
+});
+
+/* ============================================================
+   LOADER
+   ============================================================ */
+const MIN_VISIBLE = reduced ? 200 : 1400;
+const MAX_VISIBLE = reduced ? 200 : 2600;
+const EXIT_MS = reduced ? 0 : 850;
+const loader = document.getElementById('loader');
+const loaderWord = document.getElementById('loaderWord');
+const loaderFill = document.getElementById('loaderFill');
+
+let loaderDone = false;
+function finishLoader() {
+  if (loaderDone) return;
+  loaderDone = true;
+  ready = true;
+  readyFns.splice(0).forEach((fn) => fn());
+  unlockScroll();
+  if (EXIT_MS === 0) { loader.remove(); return; }
+  tween({
+    from: 0, to: -105, duration: EXIT_MS, easing: easeInOutCubic,
+    onUpdate: (v) => { loader.style.transform = `translateY(${v}%)`; },
+    onRest: () => loader.remove()
+  });
+}
+
+springMulti({
+  from: { opacity: 0, y: 16 }, to: { opacity: 1, y: 0 },
+  config: { tension: 200, friction: 22 }, onUpdate: applier(loaderWord)
+});
+
+if (reduced) {
+  loaderFill.style.transform = 'scaleX(1)';
+  setTimeout(finishLoader, 0);
+} else {
+  tween({
+    from: 0, to: 1, delay: 120, duration: MIN_VISIBLE - 120,
+    easing: easeInOutCubic,
+    onUpdate: (p) => { loaderFill.style.transform = `scaleX(${p})`; }
+  });
+  let countdownStart = null;
+  function beginCountdown() {
+    if (countdownStart !== null) return;
+    countdownStart = performance.now();
+    (function check() {
+      if (performance.now() - countdownStart >= MIN_VISIBLE) { finishLoader(); return; }
+      requestAnimationFrame(check);
+    })();
+  }
+  if (document.readyState === 'complete') beginCountdown();
+  else window.addEventListener('load', beginCountdown, { once: true });
+  setTimeout(() => { if (countdownStart === null) beginCountdown(); }, MAX_VISIBLE);
+}
+
+lockScroll();
+</script>
+</body>
+</html>
